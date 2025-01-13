@@ -1259,10 +1259,225 @@ class TomCat extends Cat {
 }
 ```
 
+### 5.7 构造代码块
+
+构造代码块会在每一个构造方法 `new` 执行之前执行。
+```shell
+package io.linux.www;
+
+class Baby {
+    String name;
+    double weight;
+
+    // 构造代码块, 在类对象中，通过 {} 组织
+    {
+        System.out.println("=======构造代码块========");
+    }
+    public Baby(String name, double weight) {
+        this.name = name;
+        this.weight = weight;
+    }
+
+    public Baby() {
+        System.out.println("======构造方法======");
+    }
+    public void eat() {
+        System.out.println("eating...");
+    }
+    public void cry() {
+        System.out.println("crying...");
+    }
+}
+```
+
+### 5.8 重写@Override
+
+在父子类中，存在方法且签名相同的非静态方法，称之为方法得覆盖/重写。
+- 如果父类中的返回值是基本类型或者void，那么子类在重写的时候返回值需要保持一致
+- 子类重写的方法的权限修饰符的范围要大于等于父类对应方法权限的修饰范围
+  - 例如父类使用 protected,则子类需要为 protected 或者 public
+- 如果父类的返回值类型是引用数据，那么子类重写的方法返回值类型要么跟父类方法的返回值类型相同，要么是父类返回值类型的子类
+
+```java
+package io.linux.www;
+
+class Person {
+    public void work() {
+        System.out.println("所有人都要工作");
+    }
+}
+
+class Teacher extends Person {
+    @Override
+    public  void work() {
+        System.out.println("Teacher 教书育人");
+    }
+}
+
+class Doctor extends Person {
+    @Override
+    public void work() {
+        System.out.println("Doctor 救死扶伤");
+    }
+}
+public class DemoPerson {
+    public static void main(String[] args) {
+        Teacher t = new Teacher();
+        t.work();
+
+        Doctor d = new Doctor();
+        d.work();
+    }
+}
+```
+
+### 5.9 多态
+
+多态是继封装、继承之后，面向对象的第三大特征。
+
+```java
+package io.linux.www;
+
+class Person {
+    public void work() {
+        System.out.println("所有人都要工作");
+    }
+}
+
+class Teacher extends Person {
+    @Override
+    public  void work() {
+        System.out.println("Teacher 教书育人");
+    }
+}
+
+class Doctor extends Person {
+    @Override
+    public void work() {
+        System.out.println("Doctor 救死扶伤");
+    }
+
+    public void zuozhen() {
+        System.out.println("Doctor 坐诊");
+    }
+}
+public class DemoPerson {
+    public static void main(String[] args) {
+        // 父类 name = new 子类
+        Person p = new Doctor();
+        p.work();
+        // 向下转型 强制类型转换
+        Doctor d = (Doctor) p;
+        d.zuozhen();
+    }
+}
+```
+
+### 5.10 static 
+
+#### 5.10.1 静态变量
+
+static 修饰的变量为静态变量，也为类变量，类变量共享，一个实例变化，会引起另一个实例跟着变化。
+
+静态变量再类加载的时候进行加载
+
+```java
+public class DemoPerson {
+    public static void main(String[] args) {
+
+        Hero.kongfu = "玉女心经";
+
+        Hero h1 =  new  Hero("杨过", 18);
+        System.out.println(h1.toString());
+        Hero h2 = new Hero("小龙女", 16);
+        System.out.println(h2.toString());
+    }
+}
+
+class Hero {
+    String name;
+    int age;
+    static String kongfu; // 类变量共享
+
+    public Hero(String name, int age) {
+        this.name = name;
+        this.age = age;
+
+    }
+    public String toString() {
+        String age = String.valueOf(this.age);
+        return this.name + " " +  age + " " + Hero.kongfu;
+    }
+}
+>>>>
+杨过 18 玉女心经
+小龙女 16 玉女心经
+```
 
 
+#### 5.10.2 静态方法
+
+被 static 修饰的方法成为静态方法
+
+- 本类中直接调用
+- 非本类中，通过Class名去调用
+
+```java
+package io.linux.www;
+
+public class DemoStaticMethod {
+    public static void main(String[] args) {
+        // 直接调用
+        demo();
+        // 通过类名调用
+        int res = JavaUtil.sum(10, 20);
+        System.out.println(res);
+
+        // 通过实例调用
+        JavaUtil javaUtil = new JavaUtil();
+        int res2 = javaUtil.add(10, 20, 30);
+        System.out.println(res2);
+    }
+
+    private static void demo() {
+        System.out.println("Hello World");
+    }
+}
 
 
+class JavaUtil {
+    // 静态方法
+    public static int sum (int a , int b) {
+        return a + b;
+    }
+    //成员方法
+    public int add (int a, int b, int c) {
+        return a + b + c;
+    }
 
+}
+```
+
+
+#### 5.10.3 静态代码块
+
+静态代码块只是在类加载的时候执行一次
+
+```java
+class JavaUtil {
+
+    static  {
+        System.out.println("JavaUtil static.");
+    }
+    // 静态方法
+    public static int sum (int a , int b) {
+        return a + b;
+    }
+    //成员方法
+    public int add (int a, int b, int c) {
+        return a + b + c;
+    }
+}
+```
 
 
