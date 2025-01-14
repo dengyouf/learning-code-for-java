@@ -1480,4 +1480,305 @@ class JavaUtil {
 }
 ```
 
+### 5.11 类的执行顺序
 
+```JAVA
+package io.linux.day3;
+
+public class TestDay03 {
+    public static void main(String[] args) {
+        new B();
+    }
+}
+
+
+class A {
+    static {
+        System.out.println("A1");
+    }
+    {
+        System.out.println("A2");
+    }
+
+    public A() {
+        System.out.println("A3");
+    }
+}
+class B extends A {
+    static {
+        System.out.println("B1");
+    }
+    {
+        System.out.println("B2");
+    }
+    public B() {
+        System.out.println("B3");
+    }
+}
+>>>:
+A1
+B1
+A2
+A3
+B2
+B3
+```
+
+## 6. final 修饰符
+
+用于修饰数据，方法，类
+
+### 6.1 修饰常量
+
+final 修饰的数据为常量，定义以后无法修改
+- 基本数据类型，其值无法修改。
+- 引用数据类型，地址不能修改。
+
+```JAVA
+
+```
+
+### 6.2 修饰方法
+
+final 修饰的方式是最终方法，定义后方法不能被重载。
+
+```java
+```
+
+
+### 6.3 修饰类
+
+final 修饰的方式是最终类，定义后类不能被继承。
+
+```java
+```
+
+
+## 7. abstract 关键字
+
+抽象方法必须被abstract关键字修饰，抽象方法必须在抽象类中，被abstrack修饰的类就是抽象类，抽象类不能创建为对象。
+
+```java
+package io.linux.day3;
+
+public class TestAbstract {
+    public static void main(String[] args) {
+        WorkerMan man = new WorkerMan();
+        man.work();
+    }
+}
+
+// 抽象类
+abstract  class Peroffession {
+    // abstract 方法
+    public abstract void work();
+}
+
+class WorkerMan extends Peroffession {
+    @Override
+    public void work() {
+        System.out.println("Working from WorkerMan");
+    }
+}
+```
+
+## 8. 接口interface
+
+接口是功能的集合，同样可以看作是一种数据类型。接口是描述所应该具备的方法，并没有具体实现，具体实现由接口的实现类来完成。这样将功能的定义和实现分离，优化了程序的设计。
+
+### 8.1. 接口基本使用
+一切事物都有功能，以前事物都有接口。
+
+- jdk1.8 之前，接口只能有抽象方法
+- jdk1.8 之后，允许接口中有尸体方法的实现
+
+```java
+package io.linux.day3;
+
+
+public class TestInterface {
+    public static void main(String[] args) {
+        // 向上转型
+        // 接口 对象名 = new 实现类
+        Proffession d = new Doctor();
+        d.work();
+        Proffession a = new Actor();
+        System.out.println(a.salary());
+    }
+
+}
+
+// 定义接口
+interface Proffession {
+    public abstract  void work();
+    double salary();
+}
+
+// 实现类和接口之间用implements 关键字产生关系
+class Doctor implements Proffession {
+
+    @Override
+    public void work() {
+        System.out.println("治病救人");
+    }
+
+    @Override
+    public double salary() {
+        return 20000;
+    }
+}
+
+class  Actor implements Proffession {
+
+    @Override
+    public void work() {
+        System.out.println("说唱Rap");
+    }
+
+    @Override
+    public double salary() {
+        return 1000000;
+    }
+}
+```
+
+### 8.2. 接口注意事项
+
+- 接口不是一个类，但是编译过程中依然会产生 .class 文件
+- 接口中不能有构造方法
+- 接口的变量必须被 public static final 修饰，如果没有写，系统默认添加
+- 接口中的抽象方法默认就是 public abstract 修饰，所以`public abstract  double salary()`;可简写为`double salary()`;
+
+
+### 8.3. 多接口实现
+
+#### 8.3.1 一个类实现多个接口
+
+```java
+package io.linux.day3;
+
+public class TestMInterface {
+    public static void main(String[] args) {
+        C c = new C();
+        c.a();
+        c.b();
+    }
+}
+
+
+interface AI {
+    void a();
+}
+interface BI {
+    void b();
+}
+
+class C implements AI, BI {
+    @Override
+    public void a() {
+        System.out.println("impl AI interface.");
+    }
+
+    @Override
+    public void b() {
+        System.out.println("impl BI interface.");
+    }
+}
+```
+
+#### 8.3.2 接口继承
+
+```JAVA
+package io.linux.a;
+
+public class TestMutilInterface {
+    public static void main(String[] args) {
+        FC fc = new FC();
+        fc.d();
+        fc.b();
+    }
+}
+
+
+interface AI {
+    void a();
+}
+interface BI {
+    void b();
+}
+interface CI {
+    void c();
+}
+
+interface DI extends AI, BI, CI {
+    void d();
+}
+
+class FC implements DI {
+    @Override
+    public void d() {
+        System.out.println("D");
+    }
+
+    @Override
+    public void a() {
+        System.out.println("A");
+    }
+
+    @Override
+    public void b() {
+        System.out.println("B");
+    }
+
+    @Override
+    public void c() {
+        System.out.println("C");
+    }
+}
+```
+
+### 8.4. 接口和类转换
+
+```JAVA
+package io.linux.b;
+
+public class TestTransferCandI {
+    public static void main(String[] args) {
+        /**
+         * 在 Java 中，类与类之间是单继承，所以形成一颗继承树
+         * B 是 A 的子类，所有可以使用向上转型
+         */
+        A a = new B();
+        /**
+         * 强制类型转换
+         * a 对象要转换的乐星是B， 发现 B与A是继承关系，所以编译通过
+         * 运行阶段 a对象的实际类型也是B类型，雷响匹配转换成功
+         */
+        B b = (B) a;
+        System.out.println("===================");
+
+        /**
+         * 因为 a的类型是 A C是A的子类，有继承关系，所以编译不报错
+         * 运行报错ClassCastException：a的实际类型是B类，B与C无继承关系,类型不匹配，强转失败
+         */
+//         C c = (C) a;
+
+        /**
+         * 在Java 中， 接口与接口之间是多继承，类与接口是多时间，这就形成了一个网状结构
+         * 在网状结构中，不容易确定两个节点的关系
+         * java为了提高编译效率，在编译期间放弃检查
+         * 意味着在编译期间，任何一个接口都可以被强转，但是在运行期间会报错java.lang.ClassCastException
+         */
+        E e = (E) a;
+    }
+}
+
+class A{}
+class B extends A{}
+
+class C extends A{}
+
+class D {}
+
+interface E {}
+```

@@ -113,6 +113,25 @@
 <li class="toctree-l4"><a class="reference internal" href="#id43">5.10.3 静态代码块</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#id44">5.11 类的执行顺序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#final">6. final 修饰符</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id45">6.1 修饰常量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id46">6.2 修饰方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id47">6.3 修饰类</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#abstract">7. abstract 关键字</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interface">8. 接口interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id48">8.1. 接口基本使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id49">8.2. 接口注意事项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id50">8.3. 多接口实现</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id51">8.3.1 一个类实现多个接口</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id52">8.3.2 接口继承</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id53">8.4. 接口和类转换</a></li>
 </ul>
 </li>
 </ul>
@@ -1832,6 +1851,310 @@ class<span class="w"> </span>Baby<span class="w"> </span><span class="o">{</span
 </pre></div>
 </div>
 </section>
+</section>
+<section id="id44">
+<h3>5.11 类的执行顺序<a class="headerlink" href="#id44" title="Link to this heading"></a></h3>
+<div class="highlight-JAVA notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">io.linux.day3</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestDay03</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">B</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kd">class</span> <span class="nc">A</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;A1&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;A2&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">A</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;A3&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">class</span> <span class="nc">B</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;B1&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;B2&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">B</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;B3&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span><span class="p">:</span>
+<span class="n">A1</span>
+<span class="n">B1</span>
+<span class="n">A2</span>
+<span class="n">A3</span>
+<span class="n">B2</span>
+<span class="n">B3</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="final">
+<h2>6. final 修饰符<a class="headerlink" href="#final" title="Link to this heading"></a></h2>
+<p>用于修饰数据，方法，类</p>
+<section id="id45">
+<h3>6.1 修饰常量<a class="headerlink" href="#id45" title="Link to this heading"></a></h3>
+<p>final 修饰的数据为常量，定义以后无法修改</p>
+<ul class="simple">
+<li><p>基本数据类型，其值无法修改。</p></li>
+<li><p>引用数据类型，地址不能修改。</p></li>
+</ul>
+<div class="highlight-JAVA notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</section>
+<section id="id46">
+<h3>6.2 修饰方法<a class="headerlink" href="#id46" title="Link to this heading"></a></h3>
+<p>final 修饰的方式是最终方法，定义后方法不能被重载。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</section>
+<section id="id47">
+<h3>6.3 修饰类<a class="headerlink" href="#id47" title="Link to this heading"></a></h3>
+<p>final 修饰的方式是最终类，定义后类不能被继承。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="abstract">
+<h2>7. abstract 关键字<a class="headerlink" href="#abstract" title="Link to this heading"></a></h2>
+<p>抽象方法必须被abstract关键字修饰，抽象方法必须在抽象类中，被abstrack修饰的类就是抽象类，抽象类不能创建为对象。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">io.linux.day3</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestAbstract</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">WorkerMan</span><span class="w"> </span><span class="n">man</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">WorkerMan</span><span class="p">();</span>
+<span class="w">        </span><span class="n">man</span><span class="p">.</span><span class="na">work</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 抽象类</span>
+<span class="kd">abstract</span><span class="w">  </span><span class="kd">class</span> <span class="nc">Peroffession</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// abstract 方法</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">work</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">WorkerMan</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Peroffession</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">work</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Working from WorkerMan&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="interface">
+<h2>8. 接口interface<a class="headerlink" href="#interface" title="Link to this heading"></a></h2>
+<p>接口是功能的集合，同样可以看作是一种数据类型。接口是描述所应该具备的方法，并没有具体实现，具体实现由接口的实现类来完成。这样将功能的定义和实现分离，优化了程序的设计。</p>
+<section id="id48">
+<h3>8.1. 接口基本使用<a class="headerlink" href="#id48" title="Link to this heading"></a></h3>
+<p>一切事物都有功能，以前事物都有接口。</p>
+<ul class="simple">
+<li><p>jdk1.8 之前，接口只能有抽象方法</p></li>
+<li><p>jdk1.8 之后，允许接口中有尸体方法的实现</p></li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">io.linux.day3</span><span class="p">;</span>
+
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestInterface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// 向上转型</span>
+<span class="w">        </span><span class="c1">// 接口 对象名 = new 实现类</span>
+<span class="w">        </span><span class="n">Proffession</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Doctor</span><span class="p">();</span>
+<span class="w">        </span><span class="n">d</span><span class="p">.</span><span class="na">work</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Proffession</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Actor</span><span class="p">();</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="na">salary</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="c1">// 定义接口</span>
+<span class="kd">interface</span> <span class="nc">Proffession</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">abstract</span><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">work</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="nf">salary</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// 实现类和接口之间用implements 关键字产生关系</span>
+<span class="kd">class</span> <span class="nc">Doctor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Proffession</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">work</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;治病救人&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">salary</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">20000</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span>  <span class="nc">Actor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Proffession</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">work</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;说唱Rap&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">salary</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1000000</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id49">
+<h3>8.2. 接口注意事项<a class="headerlink" href="#id49" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>接口不是一个类，但是编译过程中依然会产生 .class 文件</p></li>
+<li><p>接口中不能有构造方法</p></li>
+<li><p>接口的变量必须被 public static final 修饰，如果没有写，系统默认添加</p></li>
+<li><p>接口中的抽象方法默认就是 public abstract 修饰，所以<code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">abstract</span>&#160; <span class="pre">double</span> <span class="pre">salary()</span></code>;可简写为<code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">salary()</span></code>;</p></li>
+</ul>
+</section>
+<section id="id50">
+<h3>8.3. 多接口实现<a class="headerlink" href="#id50" title="Link to this heading"></a></h3>
+<section id="id51">
+<h4>8.3.1 一个类实现多个接口<a class="headerlink" href="#id51" title="Link to this heading"></a></h4>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">io.linux.day3</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestMInterface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">C</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">C</span><span class="p">();</span>
+<span class="w">        </span><span class="n">c</span><span class="p">.</span><span class="na">a</span><span class="p">();</span>
+<span class="w">        </span><span class="n">c</span><span class="p">.</span><span class="na">b</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kd">interface</span> <span class="nc">AI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">a</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">interface</span> <span class="nc">BI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">b</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">C</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">AI</span><span class="p">,</span><span class="w"> </span><span class="n">BI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">a</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;impl AI interface.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">b</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;impl BI interface.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id52">
+<h4>8.3.2 接口继承<a class="headerlink" href="#id52" title="Link to this heading"></a></h4>
+<div class="highlight-JAVA notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">io.linux.a</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestMutilInterface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">FC</span><span class="w"> </span><span class="n">fc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FC</span><span class="p">();</span>
+<span class="w">        </span><span class="n">fc</span><span class="p">.</span><span class="na">d</span><span class="p">();</span>
+<span class="w">        </span><span class="n">fc</span><span class="p">.</span><span class="na">b</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kd">interface</span> <span class="nc">AI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">a</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">interface</span> <span class="nc">BI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">b</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">interface</span> <span class="nc">CI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">c</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">interface</span> <span class="nc">DI</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">AI</span><span class="p">,</span><span class="w"> </span><span class="n">BI</span><span class="p">,</span><span class="w"> </span><span class="n">CI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">d</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">FC</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">DI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">d</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;D&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">a</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">b</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">c</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;C&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id53">
+<h3>8.4. 接口和类转换<a class="headerlink" href="#id53" title="Link to this heading"></a></h3>
+<div class="highlight-JAVA notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nn">io.linux.b</span><span class="p">;</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TestTransferCandI</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="cm">/**</span>
+<span class="cm">         * 在 Java 中，类与类之间是单继承，所以形成一颗继承树</span>
+<span class="cm">         * B 是 A 的子类，所有可以使用向上转型</span>
+<span class="cm">         */</span>
+<span class="w">        </span><span class="n">A</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">B</span><span class="p">();</span>
+<span class="w">        </span><span class="cm">/**</span>
+<span class="cm">         * 强制类型转换</span>
+<span class="cm">         * a 对象要转换的乐星是B， 发现 B与A是继承关系，所以编译通过</span>
+<span class="cm">         * 运行阶段 a对象的实际类型也是B类型，雷响匹配转换成功</span>
+<span class="cm">         */</span>
+<span class="w">        </span><span class="n">B</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;===================&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="cm">/**</span>
+<span class="cm">         * 因为 a的类型是 A C是A的子类，有继承关系，所以编译不报错</span>
+<span class="cm">         * 运行报错ClassCastException：a的实际类型是B类，B与C无继承关系,类型不匹配，强转失败</span>
+<span class="cm">         */</span>
+<span class="c1">//         C c = (C) a;</span>
+
+<span class="w">        </span><span class="cm">/**</span>
+<span class="cm">         * 在Java 中， 接口与接口之间是多继承，类与接口是多时间，这就形成了一个网状结构</span>
+<span class="cm">         * 在网状结构中，不容易确定两个节点的关系</span>
+<span class="cm">         * java为了提高编译效率，在编译期间放弃检查</span>
+<span class="cm">         * 意味着在编译期间，任何一个接口都可以被强转，但是在运行期间会报错java.lang.ClassCastException</span>
+<span class="cm">         */</span>
+<span class="w">        </span><span class="n">E</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">E</span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">A</span><span class="p">{}</span>
+<span class="kd">class</span> <span class="nc">B</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">A</span><span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">C</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">A</span><span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">D</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="kd">interface</span> <span class="nc">E</span><span class="w"> </span><span class="p">{}</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
